@@ -1,10 +1,12 @@
 package ScreenRenderer;
 
+import SimulationModel.SimulationModel;
 
 import java.awt.*;
 import java.awt.image.BufferStrategy;
 import java.awt.image.BufferedImage;
 import java.awt.image.DataBufferInt;
+
 import java.util.ArrayList;
 
 /**
@@ -27,6 +29,7 @@ public class ScreenRenderer extends Canvas {
 
     private Screen screen;
     private BufferedImage image;
+    private SimulationModel model;
 
     public ScreenRenderer(int width, int height, int scale) {
         // Screen data
@@ -50,9 +53,25 @@ public class ScreenRenderer extends Canvas {
         bs.show();
     }
 
-    public void draw(int p) {
-        screen.draw(p,p,0xFFFFFF);
-        screen.draw(p,p,0xFFFFFF);
+    public void draw(boolean[][] array) {
+        for (int z = 0; z < (HEIGTH/scale)-1; z++) {
+            for (int i = 0; i < WIDTH/scale-1; i++) {
+                if(array[i][z]) {
+                    screen.draw(i,z,0xFFFFFF);
+                }
+            }
+        }
+    }
 
+    public int getWIDTH() {
+        return WIDTH;
+    }
+
+    public int getHEIGTH() {
+        return HEIGTH;
+    }
+
+    public int getScale() {
+        return scale;
     }
 }

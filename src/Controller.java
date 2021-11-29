@@ -17,7 +17,6 @@ public class Controller implements Runnable{
     private int width = 1800;//0;
     private int height = 900;//0;
     private int scale = 10;//1;
-    private boolean[][] cellGridArray = new boolean[width][height];
     private double deltaT = 0.04;
     private double t = 0;
     private JFrame frame;
@@ -38,19 +37,11 @@ public class Controller implements Runnable{
         frame.setLocationRelativeTo(null);
         frame.setVisible(true);
         frame.requestFocus();
-        createCellGrid();
+        model.randomizeCellGrid();
+        model.checkReturnAliveNeighbours(1,1);
     }
 
-    private void createCellGrid() {
-        /**
-        int currentX = 0;
-        int currentY = 0;
-        int currentID = 0;
-        for (int i = 0; i < width*height; i++) {
 
-        }
-        **/
-    }
 
     public synchronized void start() {
         running = true;
@@ -85,12 +76,9 @@ public class Controller implements Runnable{
             lastTime = now;
 
             while(deltaUPS >= 1) {
-                model.update( t );
-                int p = model.getPixels();
-                view.draw(p);
-                cellGridArray[1][1] = false;
-                System.out.println(("1sec"));
-                System.out.println(cellGridArray[1][1]);
+                model.update();
+                boolean[][] array = model.getCellGridArray();
+                view.draw(array);
 
                 //
                 updates++;
