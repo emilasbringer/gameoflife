@@ -84,10 +84,12 @@ public class SimulationModel {
                 spawnOrKillCell(i,z);
             }
         }
+
         for(int i = 0; i < (width/scale-1); i++ ) {
             cellGridArrayTemporary[i][0] = false;
             cellGridArrayTemporary[i][height/scale-1] = false;
         }
+
         for(int i = 0; i < (height/scale-1); i++ ) {
             cellGridArrayTemporary[0][i] = false;
             cellGridArrayTemporary[width/scale-1][i] = false;
