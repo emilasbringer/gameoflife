@@ -24,7 +24,7 @@ import java.util.ArrayList;
  */
 public class ScreenRenderer extends Canvas {
     private int WIDTH;
-    private int HEIGTH;
+    private int HEIGHT;
     private int scale;
 
     private Screen screen;
@@ -34,11 +34,11 @@ public class ScreenRenderer extends Canvas {
     public ScreenRenderer(int width, int height, int scale) {
         // Screen data
         this.WIDTH = width;
-        this.HEIGTH = height;
+        this.HEIGHT = height;
         this.scale = scale;
-        image = new BufferedImage(WIDTH/scale, HEIGTH/scale, BufferedImage.TYPE_INT_RGB);
+        image = new BufferedImage(WIDTH/scale, HEIGHT/scale, BufferedImage.TYPE_INT_RGB);
         screen = new Screen(((DataBufferInt) image.getRaster().getDataBuffer()).getData(),image.getWidth(), image.getHeight());
-        setPreferredSize(new Dimension(WIDTH, HEIGTH));
+        setPreferredSize(new Dimension(WIDTH, HEIGHT));
     }
 
     public void render() {
@@ -48,30 +48,18 @@ public class ScreenRenderer extends Canvas {
             return;
         }
         Graphics g = bs.getDrawGraphics();
-        g.drawImage(image, 0, 0, WIDTH, HEIGTH, null);
+        g.drawImage(image, 0, 0, WIDTH, HEIGHT, null);
         g.dispose();
         bs.show();
     }
 
     public void draw(boolean[][] array) {
-        for (int z = 0; z < (HEIGTH/scale)-1; z++) {
-            for (int i = 0; i < WIDTH/scale-1; i++) {
+        for (int z = 0; z < (HEIGHT/scale-1); z++) {
+            for (int i = 0; i < (WIDTH/scale-1); i++) {
                 if(array[i][z]) {
                     screen.draw(i,z,0xFFFFFF);
                 }
             }
         }
-    }
-
-    public int getWIDTH() {
-        return WIDTH;
-    }
-
-    public int getHEIGTH() {
-        return HEIGTH;
-    }
-
-    public int getScale() {
-        return scale;
     }
 }

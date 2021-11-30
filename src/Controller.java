@@ -14,11 +14,9 @@ public class Controller implements Runnable{
     private boolean running = false;
     private int fps = 1;
     private int ups = 1;
-    private int width = 1800;//0;
-    private int height = 900;//0;
-    private int scale = 10;//1;
-    private double deltaT = 0.04;
-    private double t = 0;
+    private int width = 1024;
+    private int height = 512;
+    private int scale = 32;
     private JFrame frame;
     private String title = "Game of life";
     private ScreenRenderer view;
@@ -26,8 +24,10 @@ public class Controller implements Runnable{
 
 
     public Controller() {
-        view = new ScreenRenderer(width,height,scale);
-        model = new SimulationModel();
+        view = new ScreenRenderer(width, height, scale);
+        model = new SimulationModel(width, height, scale);
+        model.randomizeCellGrid();
+        model.checkReturnAliveNeighbours(1,1);
         // Frame data
         frame = new JFrame(title);
         frame.setResizable(false);
@@ -37,8 +37,6 @@ public class Controller implements Runnable{
         frame.setLocationRelativeTo(null);
         frame.setVisible(true);
         frame.requestFocus();
-        model.randomizeCellGrid();
-        model.checkReturnAliveNeighbours(1,1);
     }
 
 
@@ -83,7 +81,6 @@ public class Controller implements Runnable{
                 //
                 updates++;
                 deltaUPS--;
-                t += deltaT;
             }
 
             while (deltaFPS >= 1) {
