@@ -1,5 +1,5 @@
 # Game of Life
-<h1> Emil Åsbringer 2021/12/06 </h1>
+## Emil Åsbringer 2021/12/06
 # Inledning
 Här beskriver du kortfattat arbetets syfte/mål, arbetssätt, genomförande.
  Vad är det för något du har utvecklat. Vilket problem har ditt projekt syftat på att lösa.
