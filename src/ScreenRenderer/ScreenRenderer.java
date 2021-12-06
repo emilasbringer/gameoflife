@@ -54,10 +54,13 @@ public class ScreenRenderer extends Canvas {
     }
 
     public void draw(boolean[][] array) {
-        for (int z = 0; z < (HEIGHT/scale-1); z++) {
-            for (int i = 0; i < (WIDTH/scale-1); i++) {
-                if(array[i][z]) {
-                    screen.draw(i,z,0xFFFFFF);
+        for (int y = 0; y < (HEIGHT/scale-1); y++) {
+            for (int x = 0; x < (WIDTH/scale-1); x++) {
+                if(array[x][y]) {
+                    screen.draw(x,y,0xFFFFFF);
+                }
+                if(!array[x][y]) {
+                    screen.draw(x,y,0x000000);
                 }
             }
         }

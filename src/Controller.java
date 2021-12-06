@@ -12,11 +12,11 @@ import javax.swing.*;
 public class Controller implements Runnable{
     private Thread thread;
     private boolean running = false;
-    private int fps = 1;
-    private int ups = 1;
+    private int fps = 30;
+    private int ups = 30;
     private int width = 1024;
     private int height = 512;
-    private int scale = 32;
+    private int scale = 1;
     private JFrame frame;
     private String title = "Game of life";
     private ScreenRenderer view;
@@ -27,7 +27,6 @@ public class Controller implements Runnable{
         view = new ScreenRenderer(width, height, scale);
         model = new SimulationModel(width, height, scale);
         model.randomizeCellGrid();
-        model.checkReturnAliveNeighbours(1,1);
         // Frame data
         frame = new JFrame(title);
         frame.setResizable(false);

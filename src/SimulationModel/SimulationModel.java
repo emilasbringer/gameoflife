@@ -23,8 +23,6 @@ public class SimulationModel {
         this.scale = s;
         this.cellGridArray = new boolean[width/scale][height/scale];
         this.cellGridArrayTemporary = new boolean[width/scale][height/scale];
-        System.out.println(cellGridArray.length);
-        System.out.println(cellGridArrayTemporary.length);
     }
 
 
@@ -38,15 +36,15 @@ public class SimulationModel {
 
     public void randomizeCellGrid() {
         System.out.println("Randomizing cells...");
-        for (int z = 1; z < (height/scale)-1; z++) {
-            for (int i = 1; i < (width / scale)-1; i++) {
+        for (int z = 1; z < (height/scale) - 1; z++) {
+            for (int i = 1; i < (width / scale) - 1; i++) {
                 cellGridArray[i][z] = randomBoolean();
-                System.out.println("x=" + i + " y=" + z + " " + cellGridArray[i][z]);
+                //System.out.println("x=" + i + " y=" + z + " " + cellGridArray[i][z]);
             }
         }
     }
 
-    public int checkReturnAliveNeighbours(int x, int y) {
+    public int checkAliveNeighbours(int x, int y) {
         int aliveNeighbours = 0;
 
         if (cellGridArray[x - 1][y - 1]) {aliveNeighbours++;} //System.out.println("Cell " + (x-1) + " " + (y-1) + " is alive");} else System.out.println("Cell " + (x-1) + " " + (y-1) + " is dead");
@@ -64,48 +62,32 @@ public class SimulationModel {
     }
 
     public void spawnOrKillCell(int x, int y) {
-        if (cellGridArray[x][y]) {
-            if(checkReturnAliveNeighbours(x, y) == 2 || checkReturnAliveNeighbours(x, y) == 3) {
-                cellGridArrayTemporary[x][y] = true;
-            }
+        if(cellGridArray[x][y] && (checkAliveNeighbours(x, y) == 2 || checkAliveNeighbours(x, y) == 3)) {
+            cellGridArrayTemporary[x][y] = true;
         }
-        if (!cellGridArray[x][y]) {
-            if(checkReturnAliveNeighbours(x, y) == 3) {
-                cellGridArrayTemporary[x][y] = true;
-            }
+        else if (!cellGridArray[x][y] && checkAliveNeighbours(x, y) == 3) {
+            cellGridArrayTemporary[x][y] = true;
         }
-        else cellGridArrayTemporary[x][y] = false;
+        else if (cellGridArray[x][y]){
+            cellGridArrayTemporary[x][y] = false;
+        }
     }
 
     public void update() {
-        System.out.println("Updating grid");
-        //Clear Left&Right border
-        for(int i = 0; i < (height/scale-1); i++ ) {
-            cellGridArrayTemporary[0][i] = false;
-            cellGridArrayTemporary[height/scale-1][i] = false;
-        }
-
-        //Clear Top&Bottom border
-        for(int i = 0; i < (width/scale-1); i++ ) {
-            cellGridArrayTemporary[i][0] = false;
-            cellGridArrayTemporary[i][height/scale-1] = false;
-        }
-
         //Check if to spawn or kill next update
-        for (int y = 1; y < (height / scale)-1; y++) {
+        for (int y = 1; y < (height / scale) - 1; y++) {
             for (int x = 1; x < (width / scale) - 1; x++) {
                 spawnOrKillCell(x,y);
-                //System.out.println("SpawnedorKilled cell nr = " + x + " " + y);
             }
         }
 
         //Apply Changes
-        for (int z = 0; z < (height/scale)-1; z++) {
-            for (int i = 0; i < (width/scale) - 1; i++) {
-                cellGridArray[i][z] = cellGridArrayTemporary[i][z];
+        for (int y = 1; y < (height/scale) - 1; y++) {
+            for (int x = 1; x < (width/scale) - 1; x++) {
+                cellGridArray[x][y] = cellGridArrayTemporary[x][y];
+                //System.out.println("CellgridArray " + x + " " + y + " is " + cellGridArray[x][y]);
             }
         }
-
     }
     public boolean[][] getCellGridArray() {
         return cellGridArray;
